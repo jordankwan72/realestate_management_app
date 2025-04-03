@@ -11,7 +11,7 @@ const CallToActionSection = () => {
     <div className="relative pt-24 pb-24">
       <Image
         src="/landing-call-to-action.jpg"
-        alt="Rentarino Search Selection Background"
+        alt="RentRight Search Selection Background"
         fill
         className="object-cover object-center"
       ></Image>
