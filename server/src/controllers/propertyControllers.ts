@@ -205,6 +205,7 @@ export const createProperty = async (
       managerCognitoId,
       ...propertyData
     } = req.body;
+    // Enable PhotoURLS for when launching application with S3 to store .jpg files. Without it just disable this feature.
 
     // const photoUrls = await Promise.all(
     //   files.map(async (file) => {
