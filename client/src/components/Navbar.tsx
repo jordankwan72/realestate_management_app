@@ -79,7 +79,7 @@ const Navbar = () => {
               {authUser.userRole?.toLowerCase() === "manager" ? (
                 <>
                   <Plus className="h-4 w-4"></Plus>
-                  <span className="hidden md:block ml-2"></span>
+                  <span className="hidden md:block ml-2">Add New Property</span>
                 </>
               ) : (
                 <>

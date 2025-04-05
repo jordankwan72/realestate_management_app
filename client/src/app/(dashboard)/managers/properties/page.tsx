@@ -5,28 +5,21 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import {
   useGetAuthUserQuery,
+  useGetManagerPropertiesQuery,
   useGetPropertiesQuery,
   useGetTenantQuery,
 } from "@/state/api";
 import React from "react";
 
-const Favorites = () => {
+const Properties = () => {
   const { data: authUser } = useGetAuthUserQuery();
-  const { data: tenant } = useGetTenantQuery(
-    authUser?.cognitoInfo?.userId || "",
-    {
-      skip: !authUser?.cognitoInfo?.userId,
-    }
-  );
-
   const {
-    data: favoriteProperties,
+    data: managerProperties,
     isLoading,
     error,
-  } = useGetPropertiesQuery(
-    { favoriteIds: tenant?.favorites?.map((fav: { id: number }) => fav.id) },
-    { skip: !tenant?.favorites || tenant?.favorites.length === 0 }
-  );
+  } = useGetManagerPropertiesQuery(authUser?.cognitoInfo?.userId || "", {
+    skip: !authUser?.cognitoInfo?.userId,
+  });
 
   if (isLoading) return <Loading />;
   if (error) return <div>Error loading favorites</div>;
@@ -34,26 +27,26 @@ const Favorites = () => {
   return (
     <div className="dashboard-container">
       <Header
-        title="Favorited Properties"
-        subtitle="Browse and manage your saved property listings"
+        title="My Properties"
+        subtitle="View and manage your property listings (wow that's a lot of money makers)"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {favoriteProperties?.map((property) => (
+        {managerProperties?.map((property) => (
           <Card
             key={property.id}
             property={property}
             isFavorite={true}
             onFavoriteToggle={() => {}}
             showFavoriteButton={false}
-            propertyLink={`/tenants/residences/${property.id}`}
+            propertyLink={`/managers/properties/${property.id}`}
           />
         ))}
       </div>
-      {(!favoriteProperties || favoriteProperties.length === 0) && (
-        <p>You don&lsquo;t have any favorited properties</p>
+      {(!managerProperties || managerProperties.length === 0) && (
+        <p>You don&lsquo;t manage properties (lol poor)</p>
       )}
     </div>
   );
 };
 
-export default Favorites;
+export default Properties;
